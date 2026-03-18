@@ -31,6 +31,20 @@ A local AgentSkill for OpenClaw that saves and restores conversation handoff not
 - 列出已保存摘要
 - 按更新时间排序列出项目摘要
 
+### 实际对话示例
+
+```text
+用户：保存当前会话摘要到 oauth-switch-chat
+助手：已把当前会话上下文保存到 handoffs/sessions/oauth-switch-chat.md。
+
+用户：恢复 oauth-switch-chat 上下文
+助手：当前在做 OpenClaw OAuth 多账号切换；已完成 profile 管理脚本与 README；下一步是继续处理项目级 handoff。
+
+用户：列出项目摘要，按更新时间排序
+助手：1. oauth-switch
+2. context-handoff
+```
+
 ### 本地安装
 
 把仓库里的 `context-handoff` 文件夹放到本地 skills 目录，例如：
@@ -46,8 +60,8 @@ cp -R context-handoff ~/.agents/skills/
 clawhub publish ./context-handoff \
   --slug context-handoff \
   --name "Context Handoff" \
-  --version 0.1.0 \
-  --changelog "Initial public release with updated-time sorting"
+  --version 0.1.1 \
+  --changelog "Improve search triggers and add real conversation examples"
 ```
 
 ### 用户搜索和安装
@@ -78,9 +92,30 @@ When you switch accounts, reset sessions, or move across chat threads, useful wo
 ### Trigger examples
 
 - save session context
+- save current context
+- save chat summary
+- restore session context
 - restore project summary
+- continue last discussion
+- resume project context
 - list project summaries
+- list saved summaries
 - sort by updated time
+- most recently updated
+
+### Real conversation example
+
+```text
+User: Save the current chat summary to oauth-switch-chat
+Assistant: Saved the current session handoff to handoffs/sessions/oauth-switch-chat.md.
+
+User: Restore oauth-switch-chat context
+Assistant: You were working on OpenClaw OAuth multi-account switching; profile management scripts and README updates were done; next step is improving project-level handoff.
+
+User: List project summaries sorted by updated time
+Assistant: 1. oauth-switch
+2. context-handoff
+```
 
 ### Install locally
 
@@ -97,8 +132,8 @@ cp -R context-handoff ~/.agents/skills/
 clawhub publish ./context-handoff \
   --slug context-handoff \
   --name "Context Handoff" \
-  --version 0.1.0 \
-  --changelog "Initial public release with updated-time sorting"
+  --version 0.1.1 \
+  --changelog "Improve search triggers and add real conversation examples"
 ```
 
 ### Search and install
