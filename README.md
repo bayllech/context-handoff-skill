@@ -22,6 +22,35 @@ A local AgentSkill for OpenClaw that saves and restores conversation handoff not
 
 当你切换账号、重置 session、或者换聊天线程时，工作上下文很容易丢。这个 skill 把“上下文交接”做成显式、可落盘、可恢复的文件化流程，而不是赌聊天记录永远都在。
 
+### 关键词 / 搜索策略
+
+为了让用户更容易在 ClawHub 搜到它，这个 skill 重点覆盖这些意图词：
+
+- context handoff
+- session handoff
+- chat summary
+- project summary
+- restore context
+- resume project context
+- save current context
+- recently updated summaries
+- 保存上下文
+- 会话摘要
+- 项目摘要
+- 恢复上下文
+- 按更新时间排序
+
+发布时建议带上这些 tags：
+
+- `openclaw`
+- `memory`
+- `handoff`
+- `context`
+- `session`
+- `project`
+- `summary`
+- `productivity`
+
 ### 触发示例
 
 - 保存当前上下文
@@ -45,14 +74,34 @@ A local AgentSkill for OpenClaw that saves and restores conversation handoff not
 2. context-handoff
 ```
 
-### 本地安装
+### 安装到 OpenClaw
 
-把仓库里的 `context-handoff` 文件夹放到本地 skills 目录，例如：
+#### 方式 1：从 ClawHub 安装（推荐）
+
+```bash
+clawhub search "context handoff"
+clawhub install context-handoff
+```
+
+默认会安装到当前工作目录下的 `skills/`，也可以显式指定目录：
+
+```bash
+clawhub install context-handoff --workdir ~/.openclaw --dir skills
+```
+
+#### 方式 2：手动安装到本地 skills 目录
 
 ```bash
 mkdir -p ~/.agents/skills
 cp -R context-handoff ~/.agents/skills/
 ```
+
+#### 安装后如何生效
+
+- 把 skill 放到 OpenClaw 可读取的 skills 目录后，新会话或后续相关请求里就可以被触发
+- 如果你在本机维护技能，常见目录是：`~/.agents/skills/`
+- 如果你是通过 ClawHub 安装到某个工作目录，请确认 OpenClaw 会从该目录读取 skills
+- 最简单的验证方式：直接在聊天里说“保存当前上下文”或“恢复某个项目摘要”，观察是否按 skill 逻辑执行
 
 ### 发布到 ClawHub
 
@@ -60,8 +109,9 @@ cp -R context-handoff ~/.agents/skills/
 clawhub publish ./context-handoff \
   --slug context-handoff \
   --name "Context Handoff" \
-  --version 0.1.1 \
-  --changelog "Improve search triggers and add real conversation examples"
+  --version 0.1.2 \
+  --tags "latest,openclaw,memory,handoff,context,session,project,summary,productivity" \
+  --changelog "Add search keyword strategy, tags, and fuller OpenClaw install instructions"
 ```
 
 ### 用户搜索和安装
@@ -88,6 +138,30 @@ clawhub install context-handoff
 ### Why this skill exists
 
 When you switch accounts, reset sessions, or move across chat threads, useful working context gets lost easily. This skill makes context handoff explicit and file-based instead of relying on chat history surviving forever.
+
+### Keywords / search strategy
+
+To improve discovery on ClawHub, this skill intentionally targets these phrases:
+
+- context handoff
+- session handoff
+- chat summary
+- project summary
+- restore context
+- resume project context
+- save current context
+- recently updated summaries
+
+Suggested publish tags:
+
+- `openclaw`
+- `memory`
+- `handoff`
+- `context`
+- `session`
+- `project`
+- `summary`
+- `productivity`
 
 ### Trigger examples
 
@@ -117,14 +191,34 @@ Assistant: 1. oauth-switch
 2. context-handoff
 ```
 
-### Install locally
+### Install into OpenClaw
 
-Clone or copy this repo, then place the skill folder under your local skills directory, for example:
+#### Option 1: Install from ClawHub (recommended)
+
+```bash
+clawhub search "context handoff"
+clawhub install context-handoff
+```
+
+By default this installs into `skills/` under the current workdir. You can also set the target explicitly:
+
+```bash
+clawhub install context-handoff --workdir ~/.openclaw --dir skills
+```
+
+#### Option 2: Install manually into a local skills directory
 
 ```bash
 mkdir -p ~/.agents/skills
 cp -R context-handoff ~/.agents/skills/
 ```
+
+#### How it becomes active
+
+- Once the skill is placed in a skills directory that OpenClaw reads, it can be triggered in later requests
+- A common local directory is `~/.agents/skills/`
+- If you install via ClawHub into a custom workdir, make sure OpenClaw is actually reading skills from that location
+- The simplest verification is to ask for something like “save current context” or “restore a project summary” and confirm the skill behavior appears
 
 ### Publish to ClawHub
 
@@ -132,8 +226,9 @@ cp -R context-handoff ~/.agents/skills/
 clawhub publish ./context-handoff \
   --slug context-handoff \
   --name "Context Handoff" \
-  --version 0.1.1 \
-  --changelog "Improve search triggers and add real conversation examples"
+  --version 0.1.2 \
+  --tags "latest,openclaw,memory,handoff,context,session,project,summary,productivity" \
+  --changelog "Add search keyword strategy, tags, and fuller OpenClaw install instructions"
 ```
 
 ### Search and install
